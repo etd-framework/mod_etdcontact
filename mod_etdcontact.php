@@ -14,6 +14,8 @@ defined('_JEXEC') or die;
 require_once __DIR__ . '/helper.php';
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
-$contact         = (object) ModContactHelper::getContact($params);
+$contact         = ModContactHelper::getContact($params);
 
-require JModuleHelper::getLayoutPath('mod_etdcontact', $params->get('layout', 'default'));
+if(!empty($contact)) {
+  require JModuleHelper::getLayoutPath('mod_etdcontact', $params->get('layout', 'default')); 
+}
