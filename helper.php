@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 class ModContactHelper {
 
     public static function getContact(&$params) {
+        
+        $app = JFactory::getApplication();
 
         // Get database
         $db = JFactory::getDbo();
@@ -24,10 +26,7 @@ class ModContactHelper {
         $case_when .= $query->charLength('a.alias', '!=', '0');
         $case_when .= ' THEN ';
         $a_id = $query->castAsChar('a.id');
-        $case_when .= $query->concatenate(array(
-            $a_id,
-            'a.alias'
-        ), ':');
+        $case_when .= $query->concatenate([$a_id, 'a.alias'], ':');
         $case_when .= ' ELSE ';
         $case_when .= $a_id . ' END as slug';
 
@@ -35,10 +34,7 @@ class ModContactHelper {
         $case_when1 .= $query->charLength('c.alias', '!=', '0');
         $case_when1 .= ' THEN ';
         $c_id = $query->castAsChar('c.id');
-        $case_when1 .= $query->concatenate(array(
-            $c_id,
-            'c.alias'
-        ), ':');
+        $case_when1 .= $query->concatenate([$c_id, 'c.alias'], ':');
         $case_when1 .= ' ELSE ';
         $case_when1 .= $c_id . ' END as catslug';
 
@@ -51,24 +47,18 @@ class ModContactHelper {
               ->where('a.id = ' . (int)$params->get('id'));
 
         // Filter by language
-        if (JFactory::getApplication()
-                    ->getLanguageFilter()
-        ) {
-            $query->where('language in (' . $db->quote(JFactory::getLanguage()
-                                                               ->getTag()) . ',' . $db->quote('*') . ')');
+        if ($app->getLanguageFilter()) {
+            $query->where('language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
         }
 
         $db->setQuery($query);
-
-        $data = array();
+        
+        $data = null;
 
         try {
-            $data = (array)$db->loadObject();
+            $data = $db->loadObject();
         } catch (RuntimeException $e) {
-            JFactory::getApplication()
-                    ->enqueueMessage(JText::_('JERROR_AN_ERROR_HAS_OCCURRED'), 'error');
-
-            return;
+            $app->enqueueMessage(JText::_('JERROR_AN_ERROR_HAS_OCCURRED'), 'error');
         }
 
         return $data;
