@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.5" client="site" method="upgrade">
+	<name>mod_etdcontact</name>
+	<creationDate>13 juin 2016</creationDate>
+	<author>ETD Solutions</author>
+	<authorEmail>contact@etd-solutions.com</authorEmail>
+	<authorUrl>http://etd-solutions.com</authorUrl>
+	<copyright>Copyright (C) 2016 ETD Solutions. Tous droits réservés.</copyright>
+	<version>1.0.0</version>
+	<description>MOD_ETDCONTACT_XML_DESCRIPTION</description>
+	<files>
+		<filename module="mod_etdcontact">mod_etdcontact.php</filename>
+		<folder>fields</folder>
+		<folder>language</folder>
+		<folder>tmpl</folder>
+		<filename>helper.php</filename>
+		<filename>mod_etdcontact.xml</filename>
+	</files>
+	<languages>
+		<language tag="fr-FR">language/fr-FR/fr-FR.mod_etdcontact.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.mod_etdcontact.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params" addfieldpath="/modules/mod_etdcontact/fields">
+			<fieldset name="basic">
+
+				<field name="id"
+					   type="contacts"
+					   label="MOD_ETDCONTACT_FIELD_CONTACT_LABEL"
+					   description="MOD_ETDCONTACT_FIELD_CONTACT_DESC"
+					   default="0">
+					<option value="0">MOD_ETDCONTACT_FIELD_CONTACT_OPTION_ALL</option>
+				</field>
+			</fieldset>
+
+			<fieldset name="advanced">
+				<field
+						name="layout"
+						type="modulelayout"
+						label="JFIELD_ALT_LAYOUT_LABEL"
+						description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field
+						name="moduleclass_sfx"
+						type="textarea" rows="3"
+						label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+						description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+						name="cache"
+						type="list"
+						default="1"
+						label="COM_MODULES_FIELD_CACHING_LABEL"
+						description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+							value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+							value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+						name="cache_time"
+						type="text"
+						default="900"
+						label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+						description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+						name="cachemode"
+						type="hidden"
+						default="static">
+					<option
+							value="static"></option>
+				</field>
+
+			</fieldset>
+		</fields>
+	</config>
+</extension>
